@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { RootStore } from "./Store";
 import { GetPokemon } from "./actions/PokemonActions";
+import _ from "lodash";
 
 function App() {
   const dispatch = useDispatch();
@@ -10,7 +11,10 @@ function App() {
   const pokemonState = useSelector((state: RootStore) => state.pokemon);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPokemonName(event.target.value);
+    const searchValue = _.lowerCase(event.target.value);
+    if (searchValue !== "") {
+      setPokemonName(searchValue);
+    }
   };
 
   const handleSubmit = () => {
