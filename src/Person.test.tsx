@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import Person from "./Person";
 
-test("renders learn react link", () => {
+test("renders Person component", () => {
   render(<Person name="John" />);
 
   // const linkElement = screen.getByText(/Name is John/i);

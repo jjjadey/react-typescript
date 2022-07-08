@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import Sidebar from "./SideBar";
 
-test("renders learn react link", () => {
+test("renders multiple components", () => {
   const items = [{ name: "test", href: "/test" }];
   render(<Sidebar items={items} />);
   const anchorElements = screen.getAllByRole("navigation");
