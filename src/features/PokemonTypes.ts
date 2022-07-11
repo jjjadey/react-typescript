@@ -1,20 +1,9 @@
+import { AxiosError } from "axios";
+
+export const POKEMON_IDEL = "POKEMON_IDEL";
 export const POKEMON_LOADING = "POKEMON_LOADING";
 export const POKEMON_FAIL = "POKEMON_FAIL";
 export const POKEMON_SUCCESS = "POKEMON_SUCCESS";
-
-export interface PokemonLoading {
-    type: typeof POKEMON_LOADING
-}
-
-export interface PokemonFail {
-    type: typeof POKEMON_FAIL
-}
-
-export interface PokemonSuccess {
-    type: typeof POKEMON_SUCCESS,
-    payload: PokemonResponse
-}
-
 
 export type PokemonResponse = {
     abilities: PokemonAbility[],
@@ -40,11 +29,11 @@ type PokemonForms = {
     url: string
 }
 
-type PokemonGameIndices ={
+type PokemonGameIndices = {
     game_index: number,
     version: {
-      name: string,
-      url: string
+        name: string,
+        url: string
     }
 }
 
@@ -59,4 +48,10 @@ type PokemonStat = {
     }
 }
 
-export type PokemonDispatchTypes = PokemonLoading | PokemonFail | PokemonSuccess
+export type PokemonStatus = typeof POKEMON_IDEL | typeof POKEMON_LOADING | typeof POKEMON_FAIL | typeof POKEMON_SUCCESS
+
+export type PokemonState = {
+    data: PokemonResponse,
+    status: PokemonStatus,
+    error?: AxiosError,
+}
