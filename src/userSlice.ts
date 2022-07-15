@@ -24,7 +24,7 @@ interface UserState {
     status: 'idle' | 'loading' | 'complete'
 }
 
-const initialState: UserState = {
+export const initialState: UserState = {
     name: 'No user',
     status: 'idle'
 }
