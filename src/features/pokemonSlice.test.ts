@@ -1,8 +1,8 @@
 import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import { getPokemon, initialState } from "./pokemonSlice";
-import { RootStore } from "../Store";
-import { PokemonResponse, } from "./PokemonTypes";
+import { getStoreWithState, RootStore } from "../Store";
+import { PokemonResponse, POKEMON_FAIL, POKEMON_IDEL, POKEMON_LOADING, POKEMON_SUCCESS, } from "./PokemonTypes";
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -193,7 +193,7 @@ const expectedPokemonResponse: PokemonResponse = {
 };
 
 describe("thunks", () => {
-    describe("Should getPokemon with mock dispatch", () => {
+    describe("getPokemon with mock dispatch", () => {
         it("Should getPokemon fulfilled", async () => {
             const dispatch = jest.fn();
             const name = "pikachu";
@@ -223,7 +223,7 @@ describe("thunks", () => {
         })
     });
 
-    describe("Should getPokemon with mock redux store", () => {
+    describe("getPokemon with mock redux store", () => {
         it("Should getPokemon fulfilled", async () => {
             const store = mockStore(state);
             const name = "pikachu";
@@ -249,5 +249,32 @@ describe("thunks", () => {
             expect(actions[1].payload.response.data).toEqual('Not Found');
         });
     });
-
-})
+    describe("getPokemon with full redux store", () => {
+        it("Should getPokemon fulfilled", async () => {
+            const store = getStoreWithState(state);
+            const name = "pikachu";
+            await store.dispatch(getPokemon(name));
+            const pokemon = store.getState().pokemon;
+            expect(pokemon.status).toEqual(POKEMON_SUCCESS);
+            expect(pokemon.data.forms[0].name).toEqual(expectedPokemonResponse.forms[0].name);
+        });
+        it("Should getPokemon rejected", async () => {
+            const store = getStoreWithState(state);
+            const name = "pikachuuuu";
+            await store.dispatch(getPokemon(name));
+            const pokemon = store.getState().pokemon;
+            expect(pokemon.status).toEqual(POKEMON_FAIL);
+            expect(pokemon.error?.response?.status).toEqual(404);
+            expect(pokemon.error?.response?.data).toEqual('Not Found');
+        });
+        it("Should be pending before fulfilled", async () => {
+            const store = getStoreWithState(state);
+            expect(store.getState().pokemon.status).toEqual(POKEMON_IDEL);
+            const name = "pikachu";
+            const action = store.dispatch(getPokemon(name));
+            expect(store.getState().pokemon.status).toEqual(POKEMON_LOADING);
+            await action;
+            expect(store.getState().pokemon.status).toEqual(POKEMON_SUCCESS);
+        });
+    });
+});

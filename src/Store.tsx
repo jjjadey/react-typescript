@@ -14,6 +14,13 @@ export function setupStore(preloadedState?: PreloadedState<RootStore>) {
   });
 }
 
+export function getStoreWithState(preloadedState?: RootStore) {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState,
+  });
+}
+
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
