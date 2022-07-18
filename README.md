@@ -4,7 +4,7 @@ checkout branch for example
 ## All Branches 
 - master: react typescript template
 - redux-thunk-pokemon: legacy redux thunk with pokemon api
-- redux-toolkit-pokemon(WIP): redux toolkit thunk with pokemon api and unit test for redux
+- redux-toolkit-pokemon: redux toolkit thunk with pokemon api and unit test for redux
 - unit-test: basic unit test for react
 
 # Getting Started with Create React App
