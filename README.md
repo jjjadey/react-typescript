@@ -1,10 +1,7 @@
 # About
-Redux thunk : get Pokémon api
+Redux toolkit thunk: get [Pokémon api](https://pokeapi.co)
 
-[Tutorial](https://www.youtube.com/watch?v=Lkng78QNWJA&t=204s)
-
-
-[Pokémon api](https://pokeapi.co)
+Unit test for redux toolkit thunk: [example](https://egghead.io/lessons/jest-unit-testing-redux-thunks-with-a-mock-dispatch-function)
 
 [List of Pokémon name](https://bulbapedia.bulbagarden.net/wiki/List_of_Thai_Pok%C3%A9mon_names)
 
