@@ -1,12 +1,14 @@
 import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import pokemonReducer, { getPokemon, initialState } from "./pokemonSlice";
+import { getPokemon, initialState } from "./pokemonSlice";
 import { RootStore } from "../Store";
 import { PokemonResponse, } from "./PokemonTypes";
 
-const middlewares = [thunk]
+const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
-
+const state: RootStore = {
+    pokemon: initialState
+};
 const expectedPokemonResponse: PokemonResponse = {
     abilities: [
         {
@@ -194,9 +196,6 @@ describe("thunks", () => {
     describe("Should getPokemon with mock dispatch", () => {
         it("Should getPokemon fulfilled", async () => {
             const dispatch = jest.fn();
-            const state: RootStore = {
-                pokemon: initialState
-            };
             const name = "pikachu";
             const thunk = getPokemon(name);
             await thunk(dispatch, () => state, undefined);
@@ -210,9 +209,6 @@ describe("thunks", () => {
         });
         it("Should getPokemon rejected if not found pokemon data", async () => {
             const dispatch = jest.fn();
-            const state: RootStore = {
-                pokemon: initialState
-            };
             const name = "pikachuuuu";
             const thunk = getPokemon(name);
             await thunk(dispatch, () => state, undefined);
@@ -225,6 +221,33 @@ describe("thunks", () => {
             expect(calls[1][0].payload.response.status).toEqual(404);
             expect(calls[1][0].payload.response.data).toEqual('Not Found');
         })
-    })
+    });
+
+    describe("Should getPokemon with mock redux store", () => {
+        it("Should getPokemon fulfilled", async () => {
+            const store = mockStore(state);
+            const name = "pikachu";
+            await store.dispatch(getPokemon(name) as any);
+            const actions = store.getActions();
+            expect(actions).toHaveLength(2);
+            //pending
+            expect(actions[0].type).toEqual("getPokemon/pending");
+            //fulfilled
+            expect(actions[1].type).toEqual("getPokemon/fulfilled");
+            expect(actions[1].payload.forms[0].name).toEqual(expectedPokemonResponse.forms[0].name); // check with payload
+        });
+        it("Should getPokemon rejected if not found pokemon data", async () => {
+            const store = mockStore(state);
+            const name = "pikachuuuu";
+            await store.dispatch(getPokemon(name) as any);
+            const actions = store.getActions();
+            expect(actions).toHaveLength(2);
+            //pending
+            expect(actions[0].type).toEqual("getPokemon/pending");
+            //rejected
+            expect(actions[1].payload.response.status).toEqual(404);
+            expect(actions[1].payload.response.data).toEqual('Not Found');
+        });
+    });
 
 })
