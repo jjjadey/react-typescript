@@ -28,24 +28,44 @@ function App() {
       <header className="App-header">
         <input type="text" onChange={handleChange} />
         <button onClick={handleSubmit}>Search</button>
-        <div>
-          {pokemonState.pokemon && (
-            <>
-              <img src={pokemonState.pokemon.sprites.front_default} alt="" />
+        {pokemonState.loading ? (
+          <div className="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        ) : (
+          <div>
+            {pokemonState.pokemon && (
+              <>
+                <img src={pokemonState.pokemon.sprites.front_default} alt="" />
 
-              <p style={{ color: "#61dafb" }}> Abilities</p>
-              <ul>
-                {pokemonState.pokemon.abilities.map((ability) => {
-                  return (
-                    <li style={{ fontSize: "18px" }} key={ability.ability.name}>
-                      {ability.ability.name}
-                    </li>
-                  );
-                })}
-              </ul>
-            </>
-          )}
-        </div>
+                <p style={{ color: "#61dafb" }}> Abilities</p>
+                <ul>
+                  {pokemonState.pokemon.abilities.map((ability) => {
+                    return (
+                      <li
+                        style={{ fontSize: "18px" }}
+                        key={ability.ability.name}
+                      >
+                        {ability.ability.name}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </>
+            )}
+          </div>
+        )}
       </header>
     </div>
   );
