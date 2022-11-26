@@ -8,19 +8,19 @@ export const getPokemon = createAsyncThunk('getPokemon',
     async (name: string, { rejectWithValue }) => {
         try {
             const res: AxiosResponse = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
-            console.log('>>>response', res.data)
+            // console.log('>>>response', res.data);
             return res.data;
         }
         catch (err) {
             const error = err as AxiosError
-            console.log('>>>error response', error.response)
+            // console.log('>>>error response', error.response);
             return rejectWithValue(error)
         }
     }
 
 )
 
-const initialState: PokemonState = {
+export const initialState: PokemonState = {
     data: {} as PokemonResponse,
     status: POKEMON_IDEL
 }

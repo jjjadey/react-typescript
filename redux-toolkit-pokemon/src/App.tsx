@@ -34,7 +34,8 @@ function App() {
         {pokemonState.status !== POKEMON_IDEL && (
           <>
             {pokemonState.status === POKEMON_LOADING ? (
-              <div className="lds-spinner">
+              // eslint-disable-next-line jsx-a11y/aria-role
+              <div className="lds-spinner" role="loader">
                 <div></div>
                 <div></div>
                 <div></div>
@@ -51,7 +52,8 @@ function App() {
             ) : (
               <>
                 {pokemonState.status === POKEMON_FAIL ? (
-                  <p>{`Error ${pokemonState.error?.response?.status}: ${pokemonState.error?.response?.data}`}</p>
+                  // eslint-disable-next-line jsx-a11y/aria-role
+                  <p role="error">{`Error ${pokemonState.error?.response?.status}: ${pokemonState.error?.response?.data}`}</p>
                 ) : (
                   <div>
                     {pokemonState.data && (
@@ -65,6 +67,8 @@ function App() {
                           {pokemonState.data.abilities.map((ability) => {
                             return (
                               <li
+                                // eslint-disable-next-line jsx-a11y/aria-role
+                                role="ability"
                                 style={{ fontSize: "18px" }}
                                 key={ability.ability.name}
                               >
