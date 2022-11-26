@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import _ from "lodash";
 import "./App.css";
 import { RootStore } from "./Store";
-import { GetPokemon } from "./actions/PokemonActions";
-import _ from "lodash";
+import { getPokemon } from "./features/pokemonSlice";
+import {
+  POKEMON_FAIL,
+  POKEMON_IDEL,
+  POKEMON_LOADING,
+} from "./features/PokemonTypes";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,53 +23,63 @@ function App() {
   };
 
   const handleSubmit = () => {
-    dispatch(GetPokemon(pokemonName));
+    dispatch(getPokemon(pokemonName));
   };
-
-  console.log(pokemonState);
 
   return (
     <div className="App">
       <header className="App-header">
         <input type="text" onChange={handleChange} />
         <button onClick={handleSubmit}>Search</button>
-        {pokemonState.loading ? (
-          <div className="lds-spinner">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        ) : (
-          <div>
-            {pokemonState.pokemon && (
+        {pokemonState.status !== POKEMON_IDEL && (
+          <>
+            {pokemonState.status === POKEMON_LOADING ? (
+              <div className="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            ) : (
               <>
-                <img src={pokemonState.pokemon.sprites.front_default} alt="" />
-
-                <p style={{ color: "#61dafb" }}> Abilities</p>
-                <ul>
-                  {pokemonState.pokemon.abilities.map((ability) => {
-                    return (
-                      <li
-                        style={{ fontSize: "18px" }}
-                        key={ability.ability.name}
-                      >
-                        {ability.ability.name}
-                      </li>
-                    );
-                  })}
-                </ul>
+                {pokemonState.status === POKEMON_FAIL ? (
+                  <p>{`Error ${pokemonState.error?.response?.status}: ${pokemonState.error?.response?.data}`}</p>
+                ) : (
+                  <div>
+                    {pokemonState.data && (
+                      <>
+                        <img
+                          src={pokemonState.data.sprites.front_default}
+                          alt=""
+                        />
+                        <p style={{ color: "#61dafb" }}> Abilities</p>
+                        <ul>
+                          {pokemonState.data.abilities.map((ability) => {
+                            return (
+                              <li
+                                style={{ fontSize: "18px" }}
+                                key={ability.ability.name}
+                              >
+                                {ability.ability.name}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </>
+                    )}
+                  </div>
+                )}
               </>
             )}
-          </div>
+          </>
         )}
       </header>
     </div>
