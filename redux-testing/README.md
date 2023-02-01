@@ -15,6 +15,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 [Setting Up a Reusable Test Render Function](https://redux.js.org/usage/writing-tests#setting-up-a-reusable-test-render-function)
 
+[Writing Integration Tests With Components](https://redux.js.org/usage/writing-tests#writing-integration-tests-with-components)
+
 
 ## Available Scripts
 
