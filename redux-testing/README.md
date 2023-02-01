@@ -13,6 +13,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 [Full Counter App Example](https://codesandbox.io/s/github/reduxjs/redux/tree/master/examples/counter-ts?from-embed)
 
+[Setting Up a Reusable Test Render Function](https://redux.js.org/usage/writing-tests#setting-up-a-reusable-test-render-function)
+
 
 ## Available Scripts
 
