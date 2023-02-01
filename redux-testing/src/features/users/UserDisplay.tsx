@@ -10,8 +10,6 @@ export default function UserDisplay() {
 
   const [userId, setUserId] = useState(1);
 
-  console.log("userFetchStatus", userFetchStatus);
-
   return (
     <div>
       <input
